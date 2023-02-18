@@ -1,0 +1,67 @@
+﻿<Window x:Class="View_AP.BidOfferDeleteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:model="clr-namespace:Model_AP;assembly=Model_AP"
+        xmlns:local="clr-namespace:View_AP"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle}" Height="695.5" Width="1400" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" FontSize="18">
+    <Window.Resources>
+        <model:IntToStringConverter x:Key="IntToStringConverter"/>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <DockPanel LastChildFill="True">
+
+            <DockPanel  DockPanel.Dock="Top" HorizontalAlignment="Stretch" >
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding CurrentProduct.ProductName}" Foreground="#660010" FontSize="27" FontWeight="Heavy" Padding="70,0,0,10" VerticalAlignment="Bottom"/>
+                    <Label Content="{Binding CurrentProduct.Id}" ContentStringFormat="Auction number:&#10;{0}" Width="224" Height="60" Margin="1148,0,0,0" VerticalAlignment="Bottom"/>
+                </Grid>
+            </DockPanel>
+
+            <StackPanel  DockPanel.Dock="Bottom" Height="110">
+                <StackPanel x:Name="bidderButtons" Orientation="Horizontal" Margin="20,0,20,20" Height="52">
+                    <Label Width="560" Height="40" Margin="0,10,0,0" Content="The product is available 2 minutes after offering i.e. after the last bid."/>
+                    <TextBlock Text="{Binding CurrentProduct.OfferTime, StringFormat=Remaining time: {0:mm\\:ss}}" Foreground="#B21016" FontWeight="Medium" Height="40" Width="260" Margin="310,15,0,0"/>
+                    <Button x:Name="btnPlaceBid"  Command="{Binding BidCommand}" HorizontalAlignment="Right">PLACE BID</Button>
+                </StackPanel>
+                <Grid x:Name="adminButtons" Margin="20,30,60,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="94*"/>
+                        <ColumnDefinition Width="51*"/>
+                        <ColumnDefinition Width="521*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Command="{Binding DeleteCommand}" HorizontalAlignment="Left" Foreground="#B21016" FontWeight="Bold">DELETE</Button>
+                    <Button Command="{Binding SaveCommand}" HorizontalAlignment="Right" Foreground="#00B050" FontWeight="Bold" Grid.Column="2">OFFER</Button>
+                </Grid>
+            </StackPanel>
+
+            <Border DockPanel.Dock="Left" BorderBrush="Black" BorderThickness="1" CornerRadius="3" Margin="20,0,0,0" Width="348" Height="464">
+                <Grid>
+                    <Image Source="Images/NoImageAvailable.png"/>
+                    <Image Source="{Binding CurrentProduct.Image}"/>
+                </Grid>
+            </Border>
+
+            <StackPanel DockPanel.Dock="Right" Width="204" VerticalAlignment="Stretch" Margin="0,40,0,0">
+                <Label x:Name="lblStartingBid" Content="{Binding CurrentProduct.StartingBid}" ContentStringFormat="Start price:&#10;{0:N} EUR" FontWeight="Medium" Margin="0,35" Width="204" Height="60"/>
+                <Label x:Name="lblLastBidder" Content="{Binding CurrentProduct.UserBuyerId, Converter={StaticResource IntToStringConverter}}" ContentStringFormat="The last bidder:&#10;{0}" Margin="0,35" Width="204" Height="60"/>
+                <Label x:Name="lblLastBid" Content="{Binding CurrentProduct.FinalBid}" ContentStringFormat="The last bid:&#10;{0:N} EUR" FontWeight="Medium" Width="204" Height="60" Margin="0,35"/>
+            </StackPanel>
+            
+            <Grid Margin="10,0" Width="776">
+                <TextBlock Name="textBlock" Text="{Binding CurrentProduct.Description}" TextWrapping="Wrap" FontStretch="Normal" Foreground="#660010" Background="GhostWhite" Height="465" Margin="5,0,10,0" Padding="15"/>
+            </Grid>
+            
+        </DockPanel>
+    </Grid>
+</Window>
+
+
+
